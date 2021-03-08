@@ -5,3 +5,26 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Strain.create(
+    [
+        {
+            name: 'Cabernet Sauvignon'
+        },
+        {
+            name: 'Sauvignon Blanc'
+        },
+        {
+            name: 'Carmenere'
+        },
+        {
+            name: 'Merlot'
+        },
+        {
+            name: 'Syrah'
+        },
+        {
+            name: 'Pinot Noir'
+        }
+    ]
+)
