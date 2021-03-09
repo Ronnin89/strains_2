@@ -1,7 +1,7 @@
 class WinesController < ApplicationController
     def index
 
-        @wines = Wine.all
+        @wines = Wine.all.includes([:strains, :wine_strains])
         @wine = Wine.new
         @strains = Strain.all
 
@@ -12,13 +12,13 @@ class WinesController < ApplicationController
       @wine = Wine.new(wine_params)
       
       strain_ids = params[:wine][:strain_ids]
-      strain_ids.delete("")
+      strain_ids.delete("") unless strain_ids.nil?
 
       strain_percents = params[:wine][:strain_percent]
-      strain_percents.delete("")
+      strain_percents.delete("") unless strain_percents.nil?
 
       begin
-        
+
         Wine.transaction do
           
           @wine.save
@@ -33,13 +33,13 @@ class WinesController < ApplicationController
   
           end
   
-          flash[:success] = "Wine successfully created"
+          flash[:alert] = "Wine agregado a la lista"
           redirect_to root_path
   
         end
       rescue
 
-        flash[:error] = "Something went wrong"
+        flash[:alert] = "Verifica los datos entregados"
         redirect_to root_path
 
       end
