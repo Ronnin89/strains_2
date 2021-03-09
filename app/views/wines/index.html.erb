@@ -1,3 +1,4 @@
+<h2>Ingresa tu vino</h2>
 <%= form_with(model: @wine, local: true) do |f| %>
     <div>
         <%= f.label :name %>
@@ -5,8 +6,24 @@
     </div>
     
     <% if @strains.count > 0 %>
+
+    <h5>Solo ingresa valores en los campos seleccionados</h5>
         <div>
-            <%= collection_check_boxes(:wine, :strain_ids, @strains, :id, :name) %>
+            <% @strains.each do |strain| %>
+            <div>
+                <%= check_box(:wine, :strain_ids, {multiple:true}, strain.id, nil) %>
+                <span><%= strain.name %></span>
+                <%#= number_field(:strain_percent, nil, min: 1, max: 100, step: 1) %>
+                <input 
+                    type="number"
+                    name="wine[strain_percent][]"
+                    id="wine_strain_percent_<%= strain.id %>"
+                    min="0"
+                    max="100"
+                    step="1"
+                >
+            </div>
+            <% end %>
         </div>
     <% else %>
         <h5> No hay cepas disponibles </h5>
@@ -33,8 +50,8 @@
             <td><%= wine.name %></td>
             <td>
                 <ul>
-                <% wine.strains.each do |strain| %>
-                    <li><%= strain.name %></li>
+                <% wine_strains.each do |wine_strain| %>
+                    <li><%= wine_strain.strain.name %>(<%= wine_strain.percent %>%)</li>
                 <% end %>
                 </ul>
             </td>
