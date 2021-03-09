@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Strain.delete_all
+User.delete_all
 
 Strain.create(
     [
@@ -28,3 +30,5 @@ Strain.create(
         }
     ]
 )
+
+User.create(email: "peter@mail.com", password: "peter1", admin: true)

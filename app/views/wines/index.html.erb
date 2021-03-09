@@ -1,38 +1,51 @@
-<h2>Ingresa tu vino</h2>
-<%= form_with(model: @wine, local: true) do |f| %>
-    <div>
-        <%= f.label :name %>
-        <%= f.text_field :name %>
-    </div>
-    
-    <% if @strains.count > 0 %>
+<% if user_signed_in? %>
+    <%= link_to  "Editar perfil", edit_user_registration_path %>
+    <%= link_to  "Cerrar sesión", destroy_user_session_path, method: :delete %>
+<% else %>
+    <%= link_to  "Iniciar sesión", new_user_session_path %>
+    <%= link_to  "Registrarse", new_user_registration_path %>
+<% end %>
 
-    <h5>Solo ingresa valores en los campos seleccionados</h5>
+<% if current_user.admin == true %>
+    <h2>Ingresa tu vino</h2>
+    <%= form_with(model: @wine, local: true) do |f| %>
         <div>
-            <% @strains.each do |strain| %>
-            <div>
-                <%= check_box(:wine, :strain_ids, {multiple:true}, strain.id, nil) %>
-                <span><%= strain.name %></span>
-                <%#= number_field(:strain_percent, nil, min: 1, max: 100, step: 1) %>
-                <input 
-                    type="number"
-                    name="wine[strain_percent][]"
-                    id="wine_strain_percent_<%= strain.id %>"
-                    min="0"
-                    max="100"
-                    step="1"
-                >
-            </div>
-            <% end %>
+            <%= f.label :name %>
+            <%= f.text_field :name %>
         </div>
-    <% else %>
-        <h5> No hay cepas disponibles </h5>
-    <% end %>
+        
+        <% if @strains.count > 0 %>
 
-    <div>
-        <%= f.submit %>
-    </div>
-<%end%>
+        <h5>Solo ingresa valores en los campos seleccionados</h5>
+            <div>
+                <% @strains.each do |strain| %>
+                <div>
+                    <%= check_box(:wine, :strain_ids, {multiple:true}, strain.id, nil) %>
+                    <span><%= strain.name %></span>
+                    <%#= number_field(:strain_percent, nil, min: 1, max: 100, step: 1) %>
+                    <input 
+                        type="number"
+                        name="wine[strain_percent][]"
+                        id="wine_strain_percent_<%= strain.id %>"
+                        min="0"
+                        max="100"
+                        step="1"
+                    >
+                </div>
+                <% end %>
+            </div>
+        <% else %>
+            <h5> No hay cepas disponibles </h5>
+        <% end %>
+
+        <div>
+            <%= f.submit %>
+        </div>
+    <%end%>
+
+    
+
+<% end %>
 
 <h2>Listado de vinos</h2>
 
@@ -41,6 +54,7 @@
         <tr>
             <th>Nombre</th>
             <th>Cepas</th>
+            <th>Nota del enologo</th>
         </tr>
     </thead>
 
@@ -50,9 +64,16 @@
             <td><%= wine.name %></td>
             <td>
                 <ul>
-                <% wine_strains.each do |wine_strain| %>
-                    <li><%= wine_strain.strain.name %>(<%= wine_strain.percent %>%)</li>
-                <% end %>
+                    <% wine.wine_strains.each do |wine_strain| %>
+                        <li><%= wine_strain.strain.name %>(<%= wine_strain.percent %>%)</li>
+                    <% end %>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <% wine.wine_oenologists.each do |wine_oenologist| %>
+                        <li>Nombre: <%= wine_oenologist.oenologist.name %>, Puntaje: <%= wine_oenologist.score %></li>
+                    <% end %>
                 </ul>
             </td>
         </tr>

@@ -1,0 +1,34 @@
+<h2>Agrega un nuevo enologo</h2>
+
+<%= form_with(model: @oenologist, local: true) do |f| %>
+
+       <div>
+            <%= f.label "Nombre" %>
+            <%= f.text_field :name %>
+       </div>
+
+       <div>
+            <%= f.label "Age" %>
+            <%= f.number_field :age %>
+       </div>
+
+       <div>
+            <%= f.label "Nacionalidad" %>
+            <%= f.text_field :nationality %>
+       </div>
+       <div>
+            <%= f.label "Es editor" %> <br />
+            <%= f.check_box :editor %> <br />
+       </div>
+       <div>
+            <%= f.label "Es escritor" %> <br />
+            <%= f.check_box :writer %> <br />
+       </div>
+       <div>
+            <%= f.label "Es critico" %> <br />
+            <%= f.check_box :reviewer %> <br />
+       </div>
+
+            <%= f.submit %>
+
+<%end%>
