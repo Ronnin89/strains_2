@@ -6,29 +6,35 @@
             <%= f.label "Nombre" %>
             <%= f.text_field :name %>
        </div>
-
        <div>
             <%= f.label "Age" %>
             <%= f.number_field :age %>
        </div>
-
        <div>
             <%= f.label "Nacionalidad" %>
             <%= f.text_field :nationality %>
        </div>
        <div>
-            <%= f.label "Es editor" %> <br />
-            <%= f.check_box :editor %> <br />
+            <%= f.label "Es editor" %>
+            <%= f.check_box :editor %>
        </div>
        <div>
-            <%= f.label "Es escritor" %> <br />
-            <%= f.check_box :writer %> <br />
+            <%= f.label "Es escritor" %>
+            <%= f.check_box :writer %>
        </div>
        <div>
-            <%= f.label "Es critico" %> <br />
-            <%= f.check_box :reviewer %> <br />
+            <%= f.label "Es critico" %>
+            <%= f.check_box :reviewer %>
        </div>
-
+     <hr> 
+     <h3>Selecciona la revista en la que trabaja</h3>
+     <% @magazines.each do |magazine| %>
+          <div>
+               <%= check_box(:oenologist, :magazine_ids, {multiple:true}, magazine.id, nil) %>
+               <span><%= magazine.name %></span>
+               <%#= number_field(:strain_percent, nil, min: 1, max: 100, step: 1) %>
+          </div>
+     <% end %>
+     <hr>
             <%= f.submit %>
-
 <%end%>

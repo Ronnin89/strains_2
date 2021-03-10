@@ -51,11 +51,6 @@ class WinesController < ApplicationController
       @wine = Wine.find(params[:id])
       @oenologists = Oenologist.all
     end
-    
-    def update
-      
-    end
-    
 
     private
     def wine_params
