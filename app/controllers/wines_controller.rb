@@ -49,11 +49,42 @@ class WinesController < ApplicationController
 
     def edit
       @wine = Wine.find(params[:id])
-      @oenologists = Oenologist.all
+    end
+    
+
+    def update
+          @wine = Wine.find(params[:id])
+          if @wine.update(name: wine_params[:name])
+  
+          percent = wine_params[:percent]
+          percent.delete("") unless percent.nil?
+
+          oenologist_ids = wine_params[:oenologist_ids]
+          oenologist_ids.delete("") unless oenologist_ids.nil?
+
+          score = wine_params[:score]
+          score.delete("") unless score.nil?
+
+          for i in 0...(oenologist_ids.count) do
+            WineOenologist.create(oenologist_id: oenologist_ids[i], wine_id: @wine.id, score: score[i])
+          end  
+ 
+
+            flash[:alert] = "Nota agregada agregado a la lista"
+            redirect_to root_path
+
+        else
+
+            flash[:alert] = "Verifica los datos entregados"
+            redirect_to root_path
+            
+        end
+      
     end
 
     private
     def wine_params
-        params.require(:wine).permit(:name)
+        params.require(:wine).permit(:name, strain_ids:[], percent:[], oenologist_ids:[], score:[])
     end
+
 end

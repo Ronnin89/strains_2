@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2021_03_10_004059) do
   create_table "magazine_oenologists", force: :cascade do |t|
     t.integer "magazine_id"
     t.integer "oenologist_id"
+    t.string "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["magazine_id"], name: "index_magazine_oenologists_on_magazine_id"
@@ -31,9 +32,6 @@ ActiveRecord::Schema.define(version: 2021_03_10_004059) do
     t.string "name"
     t.integer "age"
     t.string "nationality"
-    t.boolean "editor", default: false
-    t.boolean "writer", default: false
-    t.boolean "reviewer", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
